@@ -1,8 +1,12 @@
 package main
 
 import (
-	"gorm.io/gorm"
+	"simple_api/migrations"
+	"simple_api/src/app/models"
 	"simple_api/src/config"
+	"simple_api/src/config/logger"
+
+	"gorm.io/gorm"
 )
 
 var (
@@ -10,7 +14,12 @@ var (
 )
 
 func main() {
-	setupDb()
+
+	intialSetups()
+	user := models.User{Username: "adam", Password: "password"}
+
+	Database.Create(&user)
+
 }
 
 func setupDb() error {
@@ -18,11 +27,20 @@ func setupDb() error {
 	var err error
 
 	Database, err = config.OpendbConnection()
-	println(err != nil)
 
 	if err != nil {
 		return err
 	}
+	logger.Debug("Database Connected")
+
+	migrations.MigrateTables(Database)
 
 	return nil
+}
+
+func intialSetups() {
+	// setup global logger here
+	logger.SetupLogger()
+	setupDb()
+
 }

@@ -8,9 +8,10 @@ import (
 
 var log *slog.Logger
 
-func setup() {
+func SetupLogger() {
 	jsonHandler := slog.NewJSONHandler(os.Stdout, nil)
 	log = slog.New(jsonHandler)
+	log.Info("Logger Setup")
 }
 
 func Debug(message string) {
