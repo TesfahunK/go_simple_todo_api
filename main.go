@@ -2,7 +2,7 @@ package main
 
 import (
 	"gorm.io/gorm"
-	"simple_api/config"
+	"simple_api/src/config"
 )
 
 var (
@@ -21,7 +21,6 @@ func setupDb() error {
 	println(err != nil)
 
 	if err != nil {
-
 		return err
 	}
 
